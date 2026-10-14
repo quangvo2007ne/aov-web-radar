@@ -1,0 +1,12 @@
+# Dependencies
+node_modules/
+
+# Local tunnel binary (54MB, not needed for cloud deployment)
+cloudflared.exe
+*.exe
+
+# Logs & temp
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
