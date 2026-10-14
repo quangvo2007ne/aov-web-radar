@@ -1,48 +1,64 @@
-# HƯỚNG DẪN SỬ DỤNG WEB RADAR RELAY SERVER
+# HƯỚNG DẪN SỬ DỤNG WEB RADAR RELAY SERVER (LOCAL & CLOUD 24/7)
 
 ### 1. Giới thiệu
-Đây là máy chủ chuyển tiếp (Relay Server) độc lập viết bằng Node.js, thay thế hoàn toàn máy chủ gốc `antih4x.solstice.wtf`.
-* Tự động tạo mã phòng xem Web Map khi người chơi bấm nút trong game.
-* Nhận dữ liệu toạ độ thời gian thực (60 FPS) từ iPhone và phát thẳng tới trình duyệt web của bạn bè.
-* Tích hợp sẵn trọn bộ giao diện xem Web Map chính hãng (Canvas HTML5, bản đồ địa hình, icon tướng, thanh máu, hồi chiêu).
+Đây là hệ thống máy chủ chuyển tiếp (Relay Server) độc lập viết bằng Node.js, thay thế hoàn toàn máy chủ gốc `antih4x.solstice.wtf`.
+* **Tự động cấp mã phòng:** Khi người chơi bấm "Tạo mã & phát" trong game, server tự tạo mã phòng 6 ký tự.
+* **Truyền toạ độ 60 FPS:** Nhận dữ liệu toạ độ thời gian thực từ iPhone và phát thẳng tới trình duyệt web (Safari, Chrome, v.v.).
+* **Giao diện HTML5 Canvas:** Bản đồ địa hình, hiển thị vị trí tướng, thanh máu, 4 chiêu thức hồi chiêu, bùa/quái rừng, rồng/tà thần.
 
 ---
 
-### 2. Cách khởi động Server
+### 2. Hai phương thức vận hành
 
-#### Bước 1: Khởi động Server trên máy tính
-* Mở thư mục `ChaptoRadar/web_radar_server/`
-* Nhấp đúp vào tệp **`start_server.bat`** (hoặc mở terminal gõ `node server.js`).
-* Server sẽ lắng nghe tại cổng `8080`.
-* Địa chỉ truy cập nội bộ (LAN): `http://172.168.0.208:8080/hn-aov/webmap/`
+#### PHƯƠNG THỨC 1: DÙNG CLOUD HOSTING 24/7 TRÊN RENDER (KHUYÊN DÙNG)
+> **Ưu điểm:** Máy chủ chạy vĩnh viễn trên đám mây, có link cố định, **tắt máy tính ở nhà thì radar vẫn hoạt động bình thường qua 4G**.
 
----
-
-### 3. Cách cho bạn bè ở xa cùng xem (Miễn phí 100%)
-
-Để bạn bè không ngồi chung mạng Wi-Fi (dùng 4G hoặc ở nhà riêng) có thể xem được:
-Mở một cửa sổ Terminal/Command Prompt thứ hai và gõ một trong hai lệnh sau:
-
-* **Cách A (Dùng localtunnel - không cần cài đặt thêm):**
-  ```bash
-  npx localtunnel --port 8080
+* **Địa chỉ xem Web Radar:**
+  ```text
+  https://aov-web-radar.onrender.com/hn-aov/webmap/
   ```
-  Nó sẽ in ra một đường link public, ví dụ: `https://cool-panda-42.loca.lt`
-
-* **Cách B (Dùng Cloudflare Tunnel chính hãng):**
-  Tải `cloudflared.exe` từ Cloudflare về và gõ:
-  ```bash
-  cloudflared tunnel --url http://localhost:8080
+* **Link xem trực tiếp theo phòng:**
+  ```text
+  https://aov-web-radar.onrender.com/hn-aov/webmap/?room=<MÃ_PHÒNG>
   ```
-  Nó sẽ in ra link dạng: `https://xxx.trycloudflare.com`
+* **Mã nguồn GitHub (Đã kết nối tự động):**
+  `https://github.com/quangvo2007ne/aov-web-radar`
+* **Vị trí Server:** Singapore (Southeast Asia) — Ping ~20-30ms về Việt Nam.
 
 ---
 
-### 4. Quy trình trong trận đấu
+#### PHƯƠNG THỨC 2: CHẠY CỤC BỘ TRÊN MÁY TÍNH (OFFLINE / LAN)
+> Dùng khi muốn tự host trên PC tại nhà mà không cần mạng Internet ngoài.
 
-1. Bật Server trên PC (`start_server.bat`).
-2. Mở game Liên Quân trên iPhone.
-3. Mở Menu Solstice $\rightarrow$ Chọn mục **Web Map** $\rightarrow$ Bấm nút **"Tạo mã & phát"**.
-4. Game sẽ lập tức kết nối tới server và cấp một mã phòng 6 ký tự (ví dụ: `AOV888`).
-5. Bạn gửi đường link cho bạn bè (hoặc bạn bè mở link web nhập mã phòng `AOV888`).
-6. Khi bạn vào trận đấu, toàn bộ tướng, quái, rồng/tà thần, máu và hồi chiêu sẽ hiển thị trực tiếp trên trình duyệt của bạn bè với tốc độ 60 FPS!
+1. **Khởi động server:**
+   * Mở thư mục `ChaptoRadar/web_radar_server/`
+   * Nhấp đúp vào **`start_server.bat`** (cổng mặc định `8080`).
+2. **Xem trong cùng mạng Wi-Fi:**
+   * Truy cập: `http://172.168.0.208:8080/hn-aov/webmap/`
+3. **Mở ra ngoài bằng Cloudflare Tunnel (tạm thời):**
+   * Chạy lệnh: `npx untun tunnel 8080` (hoặc mở file `cloudflared.exe`).
+   * Lấy link `https://xxx.trycloudflare.com/hn-aov/webmap/?room=<MÃ_PHÒNG>`.
+
+---
+
+### 3. Quy trình sử dụng trong trận đấu
+
+1. **Cài đặt file IPA đã nạp sẵn cấu hình Cloud:**
+   * File: `ChaptoRadar/build/perfect_20261014_224922/LienQuanChaptoRadar_Perfect.ipa`
+2. **Mở game trên iPhone:**
+   * Vào trận hoặc phòng chờ, mở Menu mod.
+   * Chọn mục **Web Map** $\rightarrow$ Bấm nút **"Tạo mã & phát"**.
+   * Game sẽ tự kết nối tới `wss://aov-web-radar.onrender.com` và hiển thị mã phòng (ví dụ: `AOV686`).
+3. **Gửi link cho bạn bè:**
+   * Gửi link: `https://aov-web-radar.onrender.com/hn-aov/webmap/?room=AOV686`
+   * Bạn bè mở link bằng bất kỳ trình duyệt nào trên điện thoại/máy tính là xem được ngay lập tức ở tốc độ 60 FPS mà không cần cài thêm bất kỳ app nào.
+
+---
+
+### 4. Công cụ hỗ trợ build nhanh
+
+Nếu sau này bạn đổi tên miền server hoặc đổi host khác, chỉ cần chạy một lệnh duy nhất:
+```bash
+python set_radar_url.py <URL_SERVER_MỚI>
+```
+Script sẽ tự động cập nhật toàn bộ bundle JavaScript và đóng gói ra file IPA hoàn hảo mới trong 20 giây.
